@@ -1,0 +1,14 @@
+%h1 Listing lives
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @lives.each do |life|
+    %tr
+      %td= link_to 'Show', life
+
+%br
+

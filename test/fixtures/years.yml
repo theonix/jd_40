@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  year: 1
+  summary: 
+  life_id: 
+
+two:
+  year: 1
+  summary: 
+  life_id: 
