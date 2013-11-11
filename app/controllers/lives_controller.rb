@@ -10,6 +10,8 @@ class LivesController < ApplicationController
   # GET /lives/1
   # GET /lives/1.json
   def show
+    @points = read_gpx_file "zetas_pedriza.gpx"
+    puts "points: #{@points}"
   end
 
   # GET /lives/new
@@ -60,6 +62,11 @@ class LivesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def points_to_google
+    @points.map { |p| "new google.maps.LatLng(#{p[0]}, #{p[1]})" }
+  end
+  helper_method :points_to_google  
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -71,4 +78,14 @@ class LivesController < ApplicationController
     def life_params
       params[:life]
     end
+
+    def read_gpx_file(file = my-log.gpx)
+      doc = Nokogiri::XML(open(file))
+      trackpoints = doc.xpath('//xmlns:trkpt')
+      points = []
+      trackpoints.each do |trkpt|
+        points << [trkpt.xpath('@lat').to_s.to_f, trkpt.xpath('@lon').to_s.to_f]
+      end
+      points
+    end  
 end

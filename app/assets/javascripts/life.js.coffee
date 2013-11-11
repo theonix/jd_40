@@ -1,13 +1,10 @@
 $ ->
-  console.log "HOLA"
-  
-  
   years = []
   
   years.push({location: {lat: 40.4167, lng: -3.7037}, text: "HOLA"})
 
   location = {lat: 40.4167, lng: -3.7037}
-  location = {lat: 37.4419, lng: -122.1419}
+  #location = {lat: 37.4419, lng: -122.1419}
 
   mapOptions = {
     center: new google.maps.LatLng(location.lat || location.lb, location.lng || location.mb),
@@ -30,14 +27,57 @@ $ ->
   marker = new google.maps.Marker({map: map})
   marker.setPosition(mapOptions.center)
   marker.setVisible(true)
+  
+  routePath = new google.maps.Polyline({
+    path: routeCoords,
+    geodesic: false,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
 
-  #polyline = new GPolyline([
-  #  new GLatLng(37.4419, -122.1419),
-  #  new GLatLng(37.4519, -122.1519)],
-  #  "#ff0000", 10)
-  #map.addOverlay(polyline);
+  # Calculate bounds and create km points
+  routeBounds = new google.maps.LatLngBounds();
+  kmCoords = []
+  interval = 1000 # 1Km
+  distance = 0
+  p1 = null
+  p2 = null
+  for point in routeCoords  
+    if not p1?
+      p1 = point
+    else if not p2?
+      p2 = point
+      distance += google.maps.geometry.spherical.computeDistanceBetween(p1, p2)
+      console.log "Distance: #{distance} --- #{(interval * (kmCoords.length + 1))}"
+      if distance > 0 && distance >= interval * (kmCoords.length + 1) 
+        console.log "KM: #{distance}"
+        kmCoords.push p2
+      p1 = p2
+      p2 = null
+    
+    routeBounds.extend(point)
+
+    
+  allPolygonBounds = new google.maps.LatLngBounds()
+  allPolygonBounds.union(routeBounds)
   
+  routePath.setMap(map)
+  map.fitBounds(allPolygonBounds)
+
+  # Calculate length
+  distance_meters = google.maps.geometry.spherical.computeLength routeCoords
   
+  #alert(distance_meters)
+  
+  for point in kmCoords
+    marker = new google.maps.Marker({
+      position: point,
+      map: map
+    })
+    marker.setVisible(true)
+  
+  # Zooomed
   zoommed = (zoom)->
     if map.getZoom() < zoom
       z = google.maps.event.addListener map, 'zoom_changed', 
@@ -47,5 +87,5 @@ $ ->
       
     
   
-  setTimeout((->zoommed(20)),2000)
+  #setTimeout((->zoommed(20)),2000)
   
