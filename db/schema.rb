@@ -11,10 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131022120505) do
+ActiveRecord::Schema.define(version: 20140225210846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "device_positions", force: true do |t|
+    t.integer  "device_id"
+    t.float    "lat"
+    t.float    "lng"
+    t.integer  "route_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "device_positions", ["device_id"], name: "index_device_positions_on_device_id", using: :btree
+
+  create_table "devices", force: true do |t|
+    t.text     "model"
+    t.text     "uiid"
+    t.text     "os"
+    t.boolean  "connected"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "friends", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "lives", force: true do |t|
     t.date     "dob"

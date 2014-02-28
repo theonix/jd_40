@@ -16,11 +16,28 @@
     = favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png'
     = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
     = javascript_include_tag "application"
-    
-    
-    %script{:type=>"text/javascript", :src=>"//maps.googleapis.com/maps/api/js?libraries=geometry,places,weather&sensor=false"}
+
 
   %body
-    = bootstrap_flash
-    = yield
-   
+    .navbar.navbar-fluid-top
+      .navbar-inner
+        .container-fluid
+          %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.brand(href="#") Jd40
+          .container.nav-collapse
+            %ul.nav
+              %li= link_to "Devices", "/devices"
+              %li= link_to "Positions", "/device_positions"
+
+    .container-fluid
+
+      .row-fluid
+        .span9
+          = bootstrap_flash
+          = yield
+    
+      %footer
+        %p &copy; Company 2014

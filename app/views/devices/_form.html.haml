@@ -1,0 +1,20 @@
+= form_for @device, :html => { :class => 'form-horizontal' } do |f|
+  .control-group
+    = f.label :model, :class => 'control-label'
+    .controls
+      = f.text_field :model, :class => 'text_field'
+  .control-group
+    = f.label :uiid, :class => 'control-label'
+    .controls
+      = f.text_field :uiid, :class => 'text_field'
+  .control-group
+    = f.label :os, :class => 'control-label'
+    .controls
+      = f.text_field :os, :class => 'text_field'
+  .control-group
+    = f.label :connected, :class => 'control-label'
+    .controls
+      = f.text_field :connected, :class => 'text_field'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    -#= link_to t('.cancel', :default => t("helpers.links.cancel")), device_path, :class => 'btn'

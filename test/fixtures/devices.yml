@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  model: 
+  uiid: 
+  os: MyString
+
+two:
+  model: 
+  uiid: 
+  os: MyString

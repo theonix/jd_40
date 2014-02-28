@@ -7,6 +7,11 @@ Jd40::Application.routes.draw do
 
   resources :lives, only: [:index, :show]
   
+  resources :devices
+  
+  resources :device_positions
+  
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
