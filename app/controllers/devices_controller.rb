@@ -4,6 +4,23 @@ class DevicesController < ApplicationController
   
   before_action :set_device, only: [:show, :edit, :update, :destroy]
 
+  # GET /devices/connect
+  # GET /devices/connect.json
+  def connect
+    
+    @device = Device.find_or_initiliaze(device_params[:model])
+    @device.update(device_params)
+    
+    respond_to do |format|
+     if @device.save
+        format.json { render action: 'show', status: :created, location: @device }
+      else
+        format.json { render json: @device.errors, status: :unprocessable_entity }
+      end
+    end
+    
+  end  
+  
   # GET /devices
   # GET /devices.json
   def index

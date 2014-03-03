@@ -1,4 +1,5 @@
 Jd40::Application.routes.draw do
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -6,8 +7,18 @@ Jd40::Application.routes.draw do
   root 'lives#index'
 
   resources :lives, only: [:index, :show]
+ #defaults: {format: 'json'} 
   
-  resources :devices
+  namespace :api do
+    namespace :v1 do
+      resources :devices, only: [:index] do
+        collection do
+          get 'positions', to: 'devices#last_positions'
+        end
+        post 'save_position'
+      end  
+    end
+  end
   
   resources :device_positions
   
